@@ -151,6 +151,20 @@ function update( dt ) {
       } else {
         b.vy = -b.vy;
       }
+      if ( !state.blocks.some( ( k ) => k.alive ) ) {
+        state.mode = 'won';
+        return;
+      }
+    }
+
+    if ( b.y > CANVAS_H ) {
+      state.lives--;
+      if ( state.lives <= 0 ) {
+        state.mode = 'gameover';
+      } else {
+        state.mode = 'ready';
+        placeBallOnPaddle();
+      }
     }
   }
 }
