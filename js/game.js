@@ -210,6 +210,11 @@ function draw() {
   state.blocks.forEach( ( k ) => {
     if ( k.alive ) drawSprite( ctx, 'block_' + k.color, k.x, k.y, k.w, k.h );
   } );
+  state.explosions.forEach( ( x ) => {
+    const frames = EXPLOSION_FRAMES[ x.color ];
+    const index = Math.min( frames.length - 1, Math.floor( x.elapsed / ( EXPLOSION_DURATION / frames.length ) ) );
+    drawFrame( ctx, frames[ index ], x.x, x.y, x.w, x.h );
+  } );
   const p = state.paddle;
   drawSprite( ctx, 'paddle', p.x, p.y, p.w, p.h );
   const b = state.ball;
