@@ -175,6 +175,7 @@ function update( dt ) {
     const hit = state.blocks.find( ( k ) => k.alive && overlaps( b, k ) );
     if ( hit ) {
       hit.alive = false;
+      state.explosions.push( { x: hit.x, y: hit.y, w: hit.w, h: hit.h, color: hit.color, elapsed: 0 } );
       state.score += BLOCK_POINTS;
       const overlapX = Math.min( b.x + b.w, hit.x + hit.w ) - Math.max( b.x, hit.x );
       const overlapY = Math.min( b.y + b.h, hit.y + hit.h ) - Math.max( b.y, hit.y );
