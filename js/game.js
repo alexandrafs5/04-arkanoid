@@ -7,6 +7,12 @@ const BALL_SIZE = 16;
 const BALL_SPEED = 360;
 const MAX_DT = 1 / 30;
 const MAX_BOUNCE_ANGLE = Math.PI / 3;
+const BLOCK_W = 64;
+const BLOCK_H = 32;
+const BLOCK_COLS = 10;
+const BLOCK_TOP = 60;
+const BLOCK_COLORS = [ 'red', 'yellow', 'cyan', 'magenta', 'hotpink', 'green' ];
+const BLOCK_POINTS = 10;
 
 const canvas = document.getElementById( 'game' );
 const ctx = canvas.getContext( '2d' );
@@ -25,6 +31,25 @@ const state = {
   ball: { x: 0, y: 0, w: BALL_SIZE, h: BALL_SIZE, vx: 0, vy: 0, speed: BALL_SPEED },
   blocks: [],
 };
+
+function createBlocks() {
+  const blocks = [];
+  BLOCK_COLORS.forEach( ( color, row ) => {
+    for ( let col = 0; col < BLOCK_COLS; col++ ) {
+      blocks.push( {
+        x: col * BLOCK_W,
+        y: BLOCK_TOP + row * BLOCK_H,
+        w: BLOCK_W,
+        h: BLOCK_H,
+        color,
+        alive: true,
+      } );
+    }
+  } );
+  return blocks;
+}
+
+state.blocks = createBlocks();
 
 let lastTime = 0;
 const keys = {};
@@ -113,11 +138,28 @@ function update( dt ) {
       b.vy = -b.speed * Math.cos( angle );
       b.y = p.y - b.h;
     }
+
+    // At most one block per frame to avoid double bounces.
+    const hit = state.blocks.find( ( k ) => k.alive && overlaps( b, k ) );
+    if ( hit ) {
+      hit.alive = false;
+      state.score += BLOCK_POINTS;
+      const overlapX = Math.min( b.x + b.w, hit.x + hit.w ) - Math.max( b.x, hit.x );
+      const overlapY = Math.min( b.y + b.h, hit.y + hit.h ) - Math.max( b.y, hit.y );
+      if ( overlapX < overlapY ) {
+        b.vx = -b.vx;
+      } else {
+        b.vy = -b.vy;
+      }
+    }
   }
 }
 
 function draw() {
   ctx.clearRect( 0, 0, CANVAS_W, CANVAS_H );
+  state.blocks.forEach( ( k ) => {
+    if ( k.alive ) drawSprite( ctx, 'block_' + k.color, k.x, k.y, k.w, k.h );
+  } );
   const p = state.paddle;
   drawSprite( ctx, 'paddle', p.x, p.y, p.w, p.h );
   const b = state.ball;
