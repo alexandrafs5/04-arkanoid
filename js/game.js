@@ -69,6 +69,7 @@ window.addEventListener( 'keyup', ( e ) => {
 } );
 
 canvas.addEventListener( 'mousemove', ( e ) => {
+  if ( state.mode === 'paused' ) return;
   const rect = canvas.getBoundingClientRect();
   const mouseX = ( e.clientX - rect.left ) * ( CANVAS_W / rect.width );
   state.paddle.x = mouseX - state.paddle.w / 2;
@@ -96,16 +97,45 @@ function launchBall() {
   state.mode = 'playing';
 }
 
+function resetGame() {
+  state.score = 0;
+  state.lives = 3;
+  state.blocks = createBlocks();
+  state.paddle.x = ( CANVAS_W - state.paddle.w ) / 2;
+  state.mode = 'ready';
+  placeBallOnPaddle();
+}
+
+function handleAction() {
+  if ( state.mode === 'ready' ) {
+    launchBall();
+  } else if ( state.mode === 'won' || state.mode === 'gameover' ) {
+    resetGame();
+  }
+}
+
+function togglePause() {
+  if ( state.mode === 'playing' ) {
+    state.mode = 'paused';
+  } else if ( state.mode === 'paused' ) {
+    state.mode = 'playing';
+  }
+}
+
 window.addEventListener( 'keydown', ( e ) => {
   if ( e.code === 'Space' ) {
     e.preventDefault();
-    launchBall();
+    if ( !e.repeat ) handleAction();
+  } else if ( e.code === 'KeyP' && !e.repeat ) {
+    togglePause();
   }
 } );
 
-canvas.addEventListener( 'click', launchBall );
+canvas.addEventListener( 'click', handleAction );
 
 function update( dt ) {
+  if ( state.mode === 'paused' ) return;
+
   const p = state.paddle;
   const left = keys.ArrowLeft || keys.KeyA;
   const right = keys.ArrowRight || keys.KeyD;
@@ -178,6 +208,39 @@ function draw() {
   drawSprite( ctx, 'paddle', p.x, p.y, p.w, p.h );
   const b = state.ball;
   drawSprite( ctx, 'ball', b.x, b.y, b.w, b.h );
+  drawHud();
+  drawOverlay();
+}
+
+function drawHud() {
+  ctx.fillStyle = '#fff';
+  ctx.font = '20px monospace';
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'left';
+  ctx.fillText( 'Score: ' + state.score, 10, 10 );
+  ctx.textAlign = 'right';
+  ctx.fillText( 'Lives: ' + state.lives, CANVAS_W - 10, 10 );
+}
+
+const OVERLAY_TEXT = {
+  ready: [ 'Ready', 'Space or click to launch' ],
+  paused: [ 'Paused', 'Press P to resume' ],
+  won: [ 'You win!', 'Space or click to restart' ],
+  gameover: [ 'Game over', 'Space or click to restart' ],
+};
+
+function drawOverlay() {
+  const text = OVERLAY_TEXT[ state.mode ];
+  if ( !text ) return;
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.fillRect( 0, 0, CANVAS_W, CANVAS_H );
+  ctx.fillStyle = '#fff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = '40px monospace';
+  ctx.fillText( text[ 0 ], CANVAS_W / 2, CANVAS_H / 2 - 20 );
+  ctx.font = '18px monospace';
+  ctx.fillText( text[ 1 ], CANVAS_W / 2, CANVAS_H / 2 + 20 );
 }
 
 function frame( time ) {
