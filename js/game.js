@@ -152,6 +152,12 @@ function update( dt ) {
     state.explosions.forEach( ( x ) => { x.elapsed += dt * 1000; } );
     state.explosions = state.explosions.filter( ( x ) => x.elapsed < EXPLOSION_DURATION );
 
+    // Level cleared: freeze the ball until the last explosion finishes.
+    if ( !state.blocks.some( ( k ) => k.alive ) ) {
+      if ( state.explosions.length === 0 ) state.mode = 'won';
+      return;
+    }
+
     b.x += b.vx * dt;
     b.y += b.vy * dt;
     if ( b.x < 0 ) {
@@ -186,10 +192,6 @@ function update( dt ) {
         b.vx = -b.vx;
       } else {
         b.vy = -b.vy;
-      }
-      if ( !state.blocks.some( ( k ) => k.alive ) ) {
-        state.mode = 'won';
-        return;
       }
     }
 
