@@ -149,6 +149,9 @@ function update( dt ) {
   if ( state.mode === 'ready' ) {
     placeBallOnPaddle();
   } else if ( state.mode === 'playing' ) {
+    state.explosions.forEach( ( x ) => { x.elapsed += dt * 1000; } );
+    state.explosions = state.explosions.filter( ( x ) => x.elapsed < EXPLOSION_DURATION );
+
     b.x += b.vx * dt;
     b.y += b.vy * dt;
     if ( b.x < 0 ) {
