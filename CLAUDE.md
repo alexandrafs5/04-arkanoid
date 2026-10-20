@@ -8,7 +8,7 @@ Always respond in English, and write all implementations (code, identifiers, com
 
 ## State of the repo
 
-Playable single-level Arkanoid MVP (spec `specs/01-arkanoid-mvp.md`). HTML5 canvas + plain JS, no build step, no package manifest, no automated tests. `README.md` is stale (Spanish, says Pygame); the real stack is canvas JS.
+Playable single-level Arkanoid MVP (spec `specs/01-arkanoid-mvp.md`) with block explosion animation (spec `specs/02-block-explosion-animation.md`). HTML5 canvas + plain JS, no build step, no package manifest, no automated tests. `README.md` is stale (Spanish, says Pygame); the real stack is canvas JS.
 
 ## Running
 
@@ -18,7 +18,7 @@ Serve the repo root with any static server and open `index.html`, e.g. `python -
 
 - `index.html` — 640x480 canvas `#game`; loads `assets/spritesheet.js`, then `js/game.js`.
 - `css/style.css` — centered canvas, dark background.
-- `js/game.js` — all game logic: `state` object (mode, score, lives, paddle, ball, blocks), `update(dt)`, `draw()`, rAF loop with dt clamped to 1/30 s. Modes: `ready | playing | paused | won | gameover`.
+- `js/game.js` — all game logic: `state` object (mode, score, lives, paddle, ball, blocks, explosions), `update(dt)`, `draw()`, rAF loop with dt clamped to 1/30 s. Modes: `ready | playing | paused | won | gameover`. Destroyed blocks leave a cosmetic entry in `state.explosions` (`{ x, y, w, h, color, elapsed }` in ms), advanced only in `playing`; `won` fires once the last explosion finishes (ball frozen meanwhile).
 - `specs/` — feature specs (workflow: `/spec`, `/spec-impl`).
 
 Controls: Left/Right or A/D or mouse = paddle; Space/click = launch / restart; P = pause.

@@ -60,17 +60,17 @@ Constants (defaults chosen here, tweakable): canvas 640x480; block 64x32 (sprite
 
 ## Acceptance criteria
 
-- [ ] Opening `index.html` (via local static server) shows canvas, paddle, ball on paddle, 60 blocks in 6 colour rows, HUD with `Score: 0` and 3 lives; no console errors.
-- [ ] Left/Right, A/D and mouse move the paddle; it never leaves the canvas.
-- [ ] Space or click in `ready` launches the ball upward.
-- [ ] Ball bounces off left, right and top walls.
-- [ ] Hitting paddle centre sends ball ~vertical; hitting an edge sends it ~60° from vertical; ball speed stays constant.
-- [ ] Ball hitting a block removes it, adds 10 to score, and bounces the ball.
-- [ ] Ball falling off the bottom reduces lives by 1 and returns to `ready`.
-- [ ] After the 3rd lost ball, `gameover` overlay shows; Space/click restarts with score 0, lives 3, 60 blocks.
-- [ ] Clearing all 60 blocks shows `won` overlay (score 600); Space/click restarts.
-- [ ] P pauses (ball and paddle frozen, "Paused" shown) and resumes.
-- [ ] No sound plays and no explosion animation is drawn.
+- [x] Opening `index.html` (via local static server) shows canvas, paddle, ball on paddle, 60 blocks in 6 colour rows, HUD with `Score: 0` and 3 lives; no console errors.
+- [x] Left/Right, A/D and mouse move the paddle; it never leaves the canvas.
+- [x] Space or click in `ready` launches the ball upward.
+- [x] Ball bounces off left, right and top walls.
+- [x] Hitting paddle centre sends ball ~vertical; hitting an edge sends it ~60° from vertical; ball speed stays constant.
+- [x] Ball hitting a block removes it, adds 10 to score, and bounces the ball.
+- [x] Ball falling off the bottom reduces lives by 1 and returns to `ready`.
+- [x] After the 3rd lost ball, `gameover` overlay shows; Space/click restarts with score 0, lives 3, 60 blocks.
+- [x] Clearing all 60 blocks shows `won` overlay (score 600); Space/click restarts.
+- [x] P pauses (ball and paddle frozen, "Paused" shown) and resumes.
+- [x] No sound plays and no explosion animation is drawn.
 
 ## Decisions taken and discarded
 

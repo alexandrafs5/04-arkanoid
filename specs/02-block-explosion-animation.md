@@ -1,6 +1,6 @@
 # SPEC 02 — Block explosion animation
 
-> **Status:** Approved
+> **Status:** Implmented
 > **Depends on:** SPEC 01
 > **Date:** 2026-10-20
 > **Objective:** When the ball destroys a block, play that block's 4-frame explosion animation from the existing sprite sheet before it disappears.
@@ -55,15 +55,15 @@ Conventions:
 
 ## Acceptance criteria
 
-- [ ] Hitting a block draws a 4-frame explosion at the block position, in that block's colour, lasting ~150 ms.
-- [ ] The block sprite is gone on the hit frame; the ball cannot collide with the exploding block.
-- [ ] Score increases by 10 on the hit frame, not at the end of the animation.
-- [ ] Hitting several blocks in quick succession plays overlapping animations independently.
-- [ ] Pressing P during an explosion freezes it on the current frame; resuming continues it.
-- [ ] After `gameover` or `won`, restarting shows no leftover explosions.
-- [ ] After the last block is hit, its explosion plays fully, then the `won` overlay appears (score 600).
-- [ ] During the final-explosion wait, losing the ball is impossible (ball frozen) and lives stay unchanged.
-- [ ] No sound plays and no console errors appear.
+- [x] Hitting a block draws a 4-frame explosion at the block position, in that block's colour, lasting ~150 ms.
+- [x] The block sprite is gone on the hit frame; the ball cannot collide with the exploding block.
+- [x] Score increases by 10 on the hit frame, not at the end of the animation.
+- [x] Hitting several blocks in quick succession plays overlapping animations independently.
+- [x] Pressing P during an explosion freezes it on the current frame; resuming continues it.
+- [x] After `gameover` or `won`, restarting shows no leftover explosions.
+- [x] After the last block is hit, its explosion plays fully, then the `won` overlay appears (score 600).
+- [x] During the final-explosion wait, losing the ball is impossible (ball frozen) and lives stay unchanged.
+- [x] No sound plays and no console errors appear.
 
 ## Decisions
 
