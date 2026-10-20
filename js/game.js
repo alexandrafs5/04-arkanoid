@@ -49,6 +49,31 @@ canvas.addEventListener( 'mousemove', ( e ) => {
   clampPaddle();
 } );
 
+function placeBallOnPaddle() {
+  const b = state.ball;
+  const p = state.paddle;
+  b.x = p.x + ( p.w - b.w ) / 2;
+  b.y = p.y - b.h;
+  b.vx = 0;
+  b.vy = 0;
+}
+
+function launchBall() {
+  if ( state.mode !== 'ready' ) return;
+  state.ball.vx = 0;
+  state.ball.vy = -state.ball.speed;
+  state.mode = 'playing';
+}
+
+window.addEventListener( 'keydown', ( e ) => {
+  if ( e.code === 'Space' ) {
+    e.preventDefault();
+    launchBall();
+  }
+} );
+
+canvas.addEventListener( 'click', launchBall );
+
 function update( dt ) {
   const p = state.paddle;
   const left = keys.ArrowLeft || keys.KeyA;
@@ -56,12 +81,33 @@ function update( dt ) {
   if ( left ) p.x -= p.speed * dt;
   if ( right ) p.x += p.speed * dt;
   clampPaddle();
+
+  const b = state.ball;
+  if ( state.mode === 'ready' ) {
+    placeBallOnPaddle();
+  } else if ( state.mode === 'playing' ) {
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
+    if ( b.x < 0 ) {
+      b.x = 0;
+      b.vx = Math.abs( b.vx );
+    } else if ( b.x + b.w > CANVAS_W ) {
+      b.x = CANVAS_W - b.w;
+      b.vx = -Math.abs( b.vx );
+    }
+    if ( b.y < 0 ) {
+      b.y = 0;
+      b.vy = Math.abs( b.vy );
+    }
+  }
 }
 
 function draw() {
   ctx.clearRect( 0, 0, CANVAS_W, CANVAS_H );
   const p = state.paddle;
   drawSprite( ctx, 'paddle', p.x, p.y, p.w, p.h );
+  const b = state.ball;
+  drawSprite( ctx, 'ball', b.x, b.y, b.w, b.h );
 }
 
 function frame( time ) {
