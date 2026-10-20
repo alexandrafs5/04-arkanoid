@@ -26,8 +26,36 @@ const state = {
 };
 
 let lastTime = 0;
+const keys = {};
+
+function clampPaddle() {
+  const p = state.paddle;
+  p.x = Math.max( 0, Math.min( CANVAS_W - p.w, p.x ) );
+}
+
+window.addEventListener( 'keydown', ( e ) => {
+  keys[ e.code ] = true;
+  if ( e.code === 'ArrowLeft' || e.code === 'ArrowRight' ) e.preventDefault();
+} );
+
+window.addEventListener( 'keyup', ( e ) => {
+  keys[ e.code ] = false;
+} );
+
+canvas.addEventListener( 'mousemove', ( e ) => {
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = ( e.clientX - rect.left ) * ( CANVAS_W / rect.width );
+  state.paddle.x = mouseX - state.paddle.w / 2;
+  clampPaddle();
+} );
 
 function update( dt ) {
+  const p = state.paddle;
+  const left = keys.ArrowLeft || keys.KeyA;
+  const right = keys.ArrowRight || keys.KeyD;
+  if ( left ) p.x -= p.speed * dt;
+  if ( right ) p.x += p.speed * dt;
+  clampPaddle();
 }
 
 function draw() {
