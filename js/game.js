@@ -6,6 +6,7 @@ const PADDLE_SPEED = 480;
 const BALL_SIZE = 16;
 const BALL_SPEED = 360;
 const MAX_DT = 1 / 30;
+const MAX_BOUNCE_ANGLE = Math.PI / 3;
 
 const canvas = document.getElementById( 'game' );
 const ctx = canvas.getContext( '2d' );
@@ -48,6 +49,11 @@ canvas.addEventListener( 'mousemove', ( e ) => {
   state.paddle.x = mouseX - state.paddle.w / 2;
   clampPaddle();
 } );
+
+function overlaps( a, b ) {
+  return a.x < b.x + b.w && a.x + a.w > b.x &&
+         a.y < b.y + b.h && a.y + a.h > b.y;
+}
 
 function placeBallOnPaddle() {
   const b = state.ball;
@@ -98,6 +104,14 @@ function update( dt ) {
     if ( b.y < 0 ) {
       b.y = 0;
       b.vy = Math.abs( b.vy );
+    }
+
+    if ( b.vy > 0 && overlaps( b, p ) ) {
+      const offset = ( ( b.x + b.w / 2 ) - ( p.x + p.w / 2 ) ) / ( p.w / 2 );
+      const angle = Math.max( -1, Math.min( 1, offset ) ) * MAX_BOUNCE_ANGLE;
+      b.vx = b.speed * Math.sin( angle );
+      b.vy = -b.speed * Math.cos( angle );
+      b.y = p.y - b.h;
     }
   }
 }
