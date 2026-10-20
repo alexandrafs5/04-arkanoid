@@ -30,6 +30,7 @@ const state = {
   },
   ball: { x: 0, y: 0, w: BALL_SIZE, h: BALL_SIZE, vx: 0, vy: 0, speed: BALL_SPEED },
   blocks: [],
+  explosions: [],
 };
 
 function createBlocks() {
@@ -101,6 +102,7 @@ function resetGame() {
   state.score = 0;
   state.lives = 3;
   state.blocks = createBlocks();
+  state.explosions = [];
   state.paddle.x = ( CANVAS_W - state.paddle.w ) / 2;
   state.mode = 'ready';
   placeBallOnPaddle();
