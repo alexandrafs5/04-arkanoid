@@ -1,6 +1,6 @@
 # SPEC 01 — Arkanoid MVP
 
-**Status:** Approved
+**Status:** Implemented
 **Depends on:** none
 **Date:** 2026-10-20
 **Objective:** A playable single-level Arkanoid in an HTML5 canvas (paddle, ball, blocks, 3 lives, score), using the existing sprite sheet.

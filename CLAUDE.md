@@ -8,11 +8,20 @@ Always respond in English, and write all implementations (code, identifiers, com
 
 ## State of the repo
 
-Early-stage Arkanoid/Breakout game. No game code, build system, package manifest, tests, or git repo yet — only `README.md` and `assets/`. Update this file once code lands.
+Playable single-level Arkanoid MVP (spec `specs/01-arkanoid-mvp.md`). HTML5 canvas + plain JS, no build step, no package manifest, no automated tests. `README.md` is stale (Spanish, says Pygame); the real stack is canvas JS.
 
-## Stack discrepancy
+## Running
 
-`README.md` (Spanish) says the game is Python + Pygame. But `assets/spritesheet.js` is browser JS (`const` globals, canvas-style `{sx, sy, sw, sh}` source rects), which implies an HTML5 canvas game. Confirm with the user which stack to use before scaffolding.
+Serve the repo root with any static server and open `index.html`, e.g. `python -m http.server` or `npx serve`. Loading the spritesheet may fail over `file://`.
+
+## File layout
+
+- `index.html` — 640x480 canvas `#game`; loads `assets/spritesheet.js`, then `js/game.js`.
+- `css/style.css` — centered canvas, dark background.
+- `js/game.js` — all game logic: `state` object (mode, score, lives, paddle, ball, blocks), `update(dt)`, `draw()`, rAF loop with dt clamped to 1/30 s. Modes: `ready | playing | paused | won | gameover`.
+- `specs/` — feature specs (workflow: `/spec`, `/spec-impl`).
+
+Controls: Left/Right or A/D or mouse = paddle; Space/click = launch / restart; P = pause.
 
 ## Assets
 
