@@ -1,6 +1,6 @@
 # SPEC 04 — Levels
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 01, SPEC 02, SPEC 03
 > **Date:** 2026-10-20
 > **Objective:** Replace the single block layout with 5 progressive levels defined as ASCII grids in `js/levels.js`, with increasing ball speed, a `Level N` HUD, and a `levelclear` step between levels.
@@ -80,20 +80,20 @@ Conventions:
 
 ## Acceptance criteria
 
-- [ ] The game loads with no console errors and shows `Level: 1`.
-- [ ] Level 1 looks identical to the current layout: 6 rows x 10 blocks, same colour order.
-- [ ] `LEVELS.length === 5` and every row of every level has exactly 10 characters.
-- [ ] Clearing level 1 plays its last explosion, then shows the `Level cleared` overlay (not `You win!`).
-- [ ] Space or click on the `Level cleared` overlay loads level 2 in `ready` with the ball on the paddle; `Level: 2` is shown.
-- [ ] Score and lives are the same before the overlay and after loading the next level.
-- [ ] Ball launch speed in level N is `360 * ( 1 + 0.08 * ( N - 1 ) )` px/s (level 5 = 475.2 px/s).
-- [ ] Clearing level 5 shows `You win!`; Space or click restarts at level 1 with score 0 and 3 lives.
-- [ ] Losing the last life in any level shows `Game over`; restarting begins at level 1 with the level 1 layout and speed.
-- [ ] Losing a life (not the last) keeps the same level, the same remaining blocks and the same ball speed.
-- [ ] Levels 2–5 each have at least 20 blocks and contain at least one empty cell.
-- [ ] Explosions, sounds, pause (P) and mute (M) work in every level; no explosions or blocks carry over into the next level.
-- [ ] P does nothing during `levelclear`.
-- [ ] Mute state survives level changes and restarts.
+- [x] The game loads with no console errors and shows `Level: 1`.
+- [x] Level 1 looks identical to the current layout: 6 rows x 10 blocks, same colour order.
+- [x] `LEVELS.length === 5` and every row of every level has exactly 10 characters.
+- [x] Clearing level 1 plays its last explosion, then shows the `Level cleared` overlay (not `You win!`).
+- [x] Space or click on the `Level cleared` overlay loads level 2 in `ready` with the ball on the paddle; `Level: 2` is shown.
+- [x] Score and lives are the same before the overlay and after loading the next level.
+- [x] Ball launch speed in level N is `360 * ( 1 + 0.08 * ( N - 1 ) )` px/s (level 5 = 475.2 px/s).
+- [x] Clearing level 5 shows `You win!`; Space or click restarts at level 1 with score 0 and 3 lives.
+- [x] Losing the last life in any level shows `Game over`; restarting begins at level 1 with the level 1 layout and speed.
+- [x] Losing a life (not the last) keeps the same level, the same remaining blocks and the same ball speed.
+- [x] Levels 2–5 each have at least 20 blocks and contain at least one empty cell.
+- [x] Explosions, sounds, pause (P) and mute (M) work in every level; no explosions or blocks carry over into the next level.
+- [x] P does nothing during `levelclear`.
+- [x] Mute state survives level changes and restarts.
 
 ## Decisions
 
