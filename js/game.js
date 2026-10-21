@@ -11,8 +11,9 @@ const BLOCK_W = 64;
 const BLOCK_H = 32;
 const BLOCK_COLS = 10;
 const BLOCK_TOP = 60;
-const BLOCK_COLORS = [ 'red', 'yellow', 'cyan', 'magenta', 'hotpink', 'green' ];
+const BLOCK_CHAR_COLORS = { R: 'red', Y: 'yellow', C: 'cyan', M: 'magenta', H: 'hotpink', G: 'green' };
 const BLOCK_POINTS = 10;
+const LEVEL_SPEED_STEP = 0.08;
 
 const canvas = document.getElementById( 'game' );
 const ctx = canvas.getContext( '2d' );
@@ -21,6 +22,7 @@ const state = {
   mode: 'ready',
   score: 0,
   lives: 3,
+  level: 1,
   paddle: {
     x: ( CANVAS_W - PADDLE_W ) / 2,
     y: CANVAS_H - 40,
@@ -46,10 +48,12 @@ function playSound( name ) {
   if ( p ) p.catch( () => {} );
 }
 
-function createBlocks() {
+function createBlocks( level ) {
   const blocks = [];
-  BLOCK_COLORS.forEach( ( color, row ) => {
+  LEVELS[ level - 1 ].forEach( ( rowChars, row ) => {
     for ( let col = 0; col < BLOCK_COLS; col++ ) {
+      const color = BLOCK_CHAR_COLORS[ rowChars[ col ] ];
+      if ( !color ) continue;
       blocks.push( {
         x: col * BLOCK_W,
         y: BLOCK_TOP + row * BLOCK_H,
@@ -63,7 +67,7 @@ function createBlocks() {
   return blocks;
 }
 
-state.blocks = createBlocks();
+state.blocks = createBlocks( 1 );
 
 let lastTime = 0;
 const keys = {};
@@ -111,14 +115,20 @@ function launchBall() {
   state.mode = 'playing';
 }
 
+function loadLevel( n ) {
+  state.level = n;
+  state.blocks = createBlocks( n );
+  state.explosions = [];
+  state.ball.speed = BALL_SPEED * ( 1 + LEVEL_SPEED_STEP * ( n - 1 ) );
+  state.mode = 'ready';
+  placeBallOnPaddle();
+}
+
 function resetGame() {
   state.score = 0;
   state.lives = 3;
-  state.blocks = createBlocks();
-  state.explosions = [];
   state.paddle.x = ( CANVAS_W - state.paddle.w ) / 2;
-  state.mode = 'ready';
-  placeBallOnPaddle();
+  loadLevel( 1 );
 }
 
 function handleAction() {
