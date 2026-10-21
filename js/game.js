@@ -134,6 +134,8 @@ function resetGame() {
 function handleAction() {
   if ( state.mode === 'ready' ) {
     launchBall();
+  } else if ( state.mode === 'levelclear' ) {
+    loadLevel( state.level + 1 );
   } else if ( state.mode === 'won' || state.mode === 'gameover' ) {
     resetGame();
   }
@@ -179,7 +181,9 @@ function update( dt ) {
 
     // Level cleared: freeze the ball until the last explosion finishes.
     if ( !state.blocks.some( ( k ) => k.alive ) ) {
-      if ( state.explosions.length === 0 ) state.mode = 'won';
+      if ( state.explosions.length === 0 ) {
+        state.mode = state.level < LEVELS.length ? 'levelclear' : 'won';
+      }
       return;
     }
 
@@ -269,6 +273,7 @@ function drawHud() {
 const OVERLAY_TEXT = {
   ready: [ 'Ready', 'Space or click to launch' ],
   paused: [ 'Paused', 'Press P to resume' ],
+  levelclear: [ 'Level cleared', 'Space or click to continue' ],
   won: [ 'You win!', 'Space or click to restart' ],
   gameover: [ 'Game over', 'Space or click to restart' ],
 };
