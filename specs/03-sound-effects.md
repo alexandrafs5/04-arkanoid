@@ -1,6 +1,6 @@
 # SPEC 03 — Sound effects
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 01, SPEC 02
 > **Date:** 2026-10-20
 > **Objective:** Play the existing `ball-bounce.mp3` on paddle and wall hits and `break-sound.mp3` when a block is destroyed, with an M key to toggle mute.
@@ -62,16 +62,16 @@ Conventions:
 
 ## Acceptance criteria
 
-- [ ] Ball hitting the left, right or top wall plays `ball-bounce.mp3`.
-- [ ] Ball hitting the paddle plays `ball-bounce.mp3`.
-- [ ] Ball destroying a block plays `break-sound.mp3` and does not play `ball-bounce.mp3` on that frame.
-- [ ] Two block hits within 100 ms produce overlapping break sounds (the first is not cut off).
-- [ ] Pressing M mutes all sounds and shows `Muted` in the HUD; pressing M again restores sound and hides the indicator.
-- [ ] M works in `ready`, `playing` and `paused`.
-- [ ] No sound plays while paused.
-- [ ] Mute state is kept after `gameover`/`won` restart and is reset on page reload.
-- [ ] Deleting an mp3 file does not throw or stop the game; no uncaught errors appear in the console.
-- [ ] Launching the ball with Space or click (first user gesture) does not produce an autoplay error.
+- [x] Ball hitting the left, right or top wall plays `ball-bounce.mp3`.
+- [x] Ball hitting the paddle plays `ball-bounce.mp3`.
+- [x] Ball destroying a block plays `break-sound.mp3` and does not play `ball-bounce.mp3` on that frame.
+- [x] Two block hits within 100 ms produce overlapping break sounds (the first is not cut off).
+- [x] Pressing M mutes all sounds and shows `Muted` in the HUD; pressing M again restores sound and hides the indicator.
+- [x] M works in `ready`, `playing` and `paused`.
+- [x] No sound plays while paused.
+- [x] Mute state is kept after `gameover`/`won` restart and is reset on page reload.
+- [x] Deleting an mp3 file does not throw or stop the game; no uncaught errors appear in the console.
+- [x] Launching the ball with Space or click (first user gesture) does not produce an autoplay error.
 
 ## Decisions
 
