@@ -143,6 +143,8 @@ window.addEventListener( 'keydown', ( e ) => {
     if ( !e.repeat ) handleAction();
   } else if ( e.code === 'KeyP' && !e.repeat ) {
     togglePause();
+  } else if ( e.code === 'KeyM' && !e.repeat ) {
+    state.muted = !state.muted;
   }
 } );
 
@@ -251,6 +253,7 @@ function drawHud() {
   ctx.fillText( 'Score: ' + state.score, 10, 10 );
   ctx.textAlign = 'right';
   ctx.fillText( 'Lives: ' + state.lives, CANVAS_W - 10, 10 );
+  if ( state.muted ) ctx.fillText( 'Muted', CANVAS_W - 10, 34 );
 }
 
 const OVERLAY_TEXT = {
