@@ -31,7 +31,20 @@ const state = {
   ball: { x: 0, y: 0, w: BALL_SIZE, h: BALL_SIZE, vx: 0, vy: 0, speed: BALL_SPEED },
   blocks: [],
   explosions: [],
+  muted: false,
 };
+
+const SOUNDS = {
+  bounce: new Audio( 'assets/sounds/ball-bounce.mp3' ),
+  break: new Audio( 'assets/sounds/break-sound.mp3' ),
+};
+Object.values( SOUNDS ).forEach( ( a ) => { a.preload = 'auto'; } );
+
+function playSound( name ) {
+  if ( state.muted ) return;
+  const p = SOUNDS[ name ].cloneNode().play();
+  if ( p ) p.catch( () => {} );
+}
 
 function createBlocks() {
   const blocks = [];
