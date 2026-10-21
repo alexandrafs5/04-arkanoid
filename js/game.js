@@ -265,6 +265,8 @@ function drawHud() {
   ctx.textBaseline = 'top';
   ctx.textAlign = 'left';
   ctx.fillText( 'Score: ' + state.score, 10, 10 );
+  ctx.textAlign = 'center';
+  ctx.fillText( 'Level: ' + state.level, CANVAS_W / 2, 10 );
   ctx.textAlign = 'right';
   ctx.fillText( 'Lives: ' + state.lives, CANVAS_W - 10, 10 );
   if ( state.muted ) ctx.fillText( 'Muted', CANVAS_W - 10, 34 );
