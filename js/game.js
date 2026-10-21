@@ -176,13 +176,16 @@ function update( dt ) {
     if ( b.x < 0 ) {
       b.x = 0;
       b.vx = Math.abs( b.vx );
+      playSound( 'bounce' );
     } else if ( b.x + b.w > CANVAS_W ) {
       b.x = CANVAS_W - b.w;
       b.vx = -Math.abs( b.vx );
+      playSound( 'bounce' );
     }
     if ( b.y < 0 ) {
       b.y = 0;
       b.vy = Math.abs( b.vy );
+      playSound( 'bounce' );
     }
 
     if ( b.vy > 0 && overlaps( b, p ) ) {
@@ -191,6 +194,7 @@ function update( dt ) {
       b.vx = b.speed * Math.sin( angle );
       b.vy = -b.speed * Math.cos( angle );
       b.y = p.y - b.h;
+      playSound( 'bounce' );
     }
 
     // At most one block per frame to avoid double bounces.
