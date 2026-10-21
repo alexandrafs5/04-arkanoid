@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Language
 
-Always respond in English, and write all implementations (code, identifiers, comments, in-game text) in English, even though the README is in Spanish.
+Always respond in English, and write all implementations (code, identifiers, comments, in-game text, docs) in English.
 
 ## State of the repo
 
-Playable 5-level Arkanoid MVP (spec `specs/01-arkanoid-mvp.md`) with block explosion animation (spec `specs/02-block-explosion-animation.md`), sound effects (spec `specs/03-sound-effects.md`) and levels (spec `specs/04-levels.md`). HTML5 canvas + plain JS, no build step, no package manifest, no automated tests. `README.md` is stale (Spanish, says Pygame); the real stack is canvas JS.
+Playable 5-level Arkanoid MVP (spec `specs/01-arkanoid-mvp.md`) with block explosion animation (spec `specs/02-block-explosion-animation.md`), sound effects (spec `specs/03-sound-effects.md`) and levels (spec `specs/04-levels.md`). HTML5 canvas + plain JS, no build step, no package manifest, no automated tests. `README.md` is in English and describes the canvas JS stack.
 
 ## Running
 
